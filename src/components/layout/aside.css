@@ -1,0 +1,29 @@
+aside {
+    height: calc(100vh - 5rem);
+    border-radius: 5px;
+    background-color: #a986e2;
+}
+
+aside div {
+    width: 80%;
+}
+
+aside div i {
+    color: #fff;
+    cursor: pointer;
+}
+
+aside .selected-tab-div {
+    border-radius: 3px;
+    background-color: #fff;
+}
+
+aside div .selected-tab {
+    color: #a986e2;
+}
+
+@media all and (min-width: 960px) {
+    aside div{
+        width: 60%;
+    }
+}
