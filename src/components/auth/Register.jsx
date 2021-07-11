@@ -3,9 +3,9 @@
 :::::::::::::::::::::::*/
 
 //  React
-import { useState } from "react";
+import { useEffect, useState } from "react";
 //  Routing
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 /*::::::::::::::::::::: 
 :::::  Component  :::::
@@ -20,8 +20,43 @@ const Register = () => {
         confirmPassword: ''
     });
 
+    const [validateEmail, setValidateEmail] = useState({
+        correct: false,
+        empty: false,
+        invalid: false,
+        exists: false
+    });
+
+    const [validatePassword, setValidatePassword] = useState({
+        correct: false,
+        empty: false,
+        noMinChars: false,
+        invalid: false
+    });
+
+    const [validateConfirmPassword, setValidateConfirmPassword] = useState({
+        correct: true,
+        empty: true
+    });
+
     //  Destructure object
     const {email, password, confirmPassword} = credentials;
+
+    //  Validate confirm password
+    useEffect(() => {
+
+        if(confirmPassword.trim() === password.trim() && confirmPassword.length >= 6) {
+            setValidateConfirmPassword({
+                correct: true,
+                empty: false
+            });
+        } else {
+            setValidateConfirmPassword({
+                correct: true,
+                empty: true
+            });
+        }
+    }, [password, confirmPassword])
 
     //  When change inputs
     const handleChange = e => {
@@ -29,29 +64,90 @@ const Register = () => {
             ...credentials,
             [e.target.name] : e.target.value
         })
+
+        if(email.trim().match(mailFormat)){
+            setValidateEmail({
+                correct: true,
+                empty: false,
+                invalid: false,
+                exists: false
+            })
+        }
+
+        if (password.trim().length >= 5) {
+            setValidatePassword({
+                correct: true,
+                empty: false,
+                noMinChars: false,
+                invalid: false
+            })
+        }
     }
+
+    // eslint-disable-next-line no-control-regex
+    const mailFormat = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
 
     // Submit form
     const handleSubmit = e => {
         e.preventDefault();
 
         //  Validate inputs
-        if(email.trim() === '' || password.trim() === ''){
+        if(email.trim() === ''){
+            setValidateEmail({
+                correct: false,
+                empty: true,
+                invalid: false,
+                exists: false
+            })
+        } else if(!email.trim().match(mailFormat)) {
+            setValidateEmail({
+                correct: false,
+                empty: false,
+                invalid: true,
+                exists: false
+            })
+        }
 
+        if(password.trim() === '') {
+            setValidatePassword({
+                correct: false,
+                empty: true,
+                noMinChars: false,
+                invalid: false
+            })
+        } else if (password.length < 6) {
+            setValidatePassword({
+                correct: false,
+                empty: false,
+                noMinChars: true,
+                invalid: false
+            })
+        } else {
+            setValidatePassword({
+                correct: true,
+                empty: false,
+                noMinChars: false,
+                invalid: false
+            })
+        }
+        
+        //  Check confirm password
+        if (confirmPassword === '') {
+            setValidateConfirmPassword({
+                correct: false,
+                empty: true
+            });
+        } else if (confirmPassword !== password) {
+            setValidateConfirmPassword({
+                correct: false,
+                empty: false
+            });
         }
 
         //  Check minimal requirements
 
-        //  Check confirm password
 
         //  Redux actions
-    }
-
-    //  Routing
-    let history = useHistory();
-
-    const registerClick = () => {
-        history.push('/register');
     }
 
     //  Register action
@@ -67,7 +163,8 @@ const Register = () => {
                 <h2 className="text-center">Register</h2>
             </header>
             <form 
-                action="" 
+                action=""
+                noValidate
                 className="col-10 col-sm-8 col-md-6 col-lg-5"
                 onSubmit={handleSubmit}>
                 <div className="row">
@@ -78,11 +175,22 @@ const Register = () => {
                             name="email" 
                             id="email" 
                             placeholder="Type an email"
-                            className="form-control" 
+                            className={ validateEmail.correct ? 'form-control is-valid' : validateEmail.invalid || validateEmail.empty ? 'form-control is-invalid' : 'form-control' }
                             aria-describedby="emailHelp"
                             onChange={handleChange}
                             value={email}/>
-                        <div id="emailHelp" className="form-text">We will not share your email</div>
+                        { 
+                        validateEmail.correct ? 
+                            <div className="valid-feedback d-block">It looks good</div>
+                        :
+                        validateEmail.empty ?  
+                            <div className="invalid-feedback d-block">You have to fill with an email</div>
+                        :
+                        validateEmail.invalid ?  
+                            <div className="invalid-feedback d-block">This is not a valid email</div>
+                        :
+                        null
+                        } 
                     </div>
                     <div className="col-12 mb-3">
                         <label htmlFor="password" className="form-label">Password</label>
@@ -91,10 +199,22 @@ const Register = () => {
                             name="password" 
                             id="password"
                             placeholder="Type a password" 
-                            className="form-control" 
+                            className={ validatePassword.correct ? 'form-control is-valid' : validatePassword.empty || validatePassword.noMinChars ? 'form-control is-invalid' : 'form-control'}
                             autoComplete="off"
                             onChange={handleChange}
                             value={password}/>
+                        { 
+                        validatePassword.correct ?
+                            <div className="valid-feedback d-block">It looks good</div>
+                        :   
+                        validatePassword.empty ?
+                            <div className="invalid-feedback d-block">You have to fill with a password</div>
+                        :
+                        validatePassword.noMinChars ?
+                            <div className="invalid-feedback d-block">The password must have minimum 6 characters</div>
+                        :
+                        null
+                        }
                     </div>
                     <div className="col-12 mb-3">
                         <label htmlFor="confirmPassword" className="form-label">Confirm password</label>
@@ -103,10 +223,22 @@ const Register = () => {
                             name="confirmPassword" 
                             id="confirmPassword"
                             placeholder="Confirm your password" 
-                            className="form-control" 
+                            className={ validateConfirmPassword.correct && validateConfirmPassword.empty ? 'form-control' : validateConfirmPassword.correct ? 'form-control is-valid' : 'form-control is-invalid'}
                             autoComplete="off"
                             onChange={handleChange}
                             value={confirmPassword}/>
+                        { 
+                        validateConfirmPassword.correct && validateConfirmPassword.empty ?
+                            null
+                        :
+                        validateConfirmPassword.correct && !validateConfirmPassword.empty?
+                            <div className="valid-feedback d-block">Correct</div>
+                        :   
+                        !validateConfirmPassword.correct && validateConfirmPassword.empty?
+                            <div className="invalid-feedback d-block">You have to confirm your password</div>
+                        :
+                            <div className="invalid-feedback d-block">Incorrect</div>
+                        }
                     </div>
 
                     {/* <div className="mb-3 form-check">
@@ -122,7 +254,7 @@ const Register = () => {
                         </button>
 
                         <Link to={'/login'} className="text-decoration-none">
-                            Go back to log in
+                            &lt;&lt; Go back to log in
                         </Link>
                     </div>
                 </div>
