@@ -153,7 +153,7 @@ const NewProject = () => {
                 </button>
             </div> */}
 
-            <div class="alert alert-success mt-5" role="alert">
+            <div className="alert alert-success mt-5" role="alert">
                 <p>Your project <strong>Title</strong> was added successfully to the database</p>
                 <a 
                     href="#a"
