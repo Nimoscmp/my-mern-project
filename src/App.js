@@ -1,3 +1,6 @@
+//  Redux
+import { Provider } from 'react-redux';
+import generateStore from './redux/store';
 //  Routing
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 //  Components
@@ -7,8 +10,13 @@ import Home from './components/main/Home'
 
 
 function App() {
+
+  const store = generateStore();
+
   return (
     <>
+    <Provider
+      store={store}>
       <Router>
         <Switch>
 
@@ -28,6 +36,7 @@ function App() {
 
         </Switch>
       </Router>
+    </Provider>
     </>
   );
 }
