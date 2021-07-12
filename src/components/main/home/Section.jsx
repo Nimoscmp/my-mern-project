@@ -13,8 +13,10 @@ const Section = () => {
         { 
         newProject ?
             <NewProject/>
-        :
+        :   projectsList ?
             <ProjectList/>
+        :
+            null
         }
     </section>        
     </>

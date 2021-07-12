@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { select_new_project_action, select_project_list_action } from '../../../redux/actions/actions';
 import '../../layout/aside.css';
 
