@@ -12,7 +12,7 @@ const Aside = () => {
                 <i className="fas fa-tasks"></i>
             </div>
             <div className="d-flex justify-content-center my-3 py-2 py-1 selected-tab-div">
-                <i className="fas fa-pen-alt selected-tab"></i>
+                <i className="fas fa-plus selected-tab"></i>
             </div>
         </div>
 
