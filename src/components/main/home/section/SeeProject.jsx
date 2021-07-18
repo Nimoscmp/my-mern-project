@@ -26,13 +26,17 @@ const SeeProject = () => {
     }
 
     useEffect(() => {
-        if (title.trim() !== '') {
+        if (title.trim() !== '' && description.trim() !== '') {
+            setValidateData({
+                title: true,
+                description: true
+            })
+        } else if (title.trim() !== '') {
             setValidateData({
                 ...validateData,
                 title: true
             })
-        }
-        if (description.trim() !== '') {
+        } else if (description.trim() !== ''){
             setValidateData({
                 ...validateData,
                 description: true
