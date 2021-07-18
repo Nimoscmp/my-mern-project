@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Tasks from "./Tasks";
 
 const SeeProject = () => {
@@ -25,8 +25,41 @@ const SeeProject = () => {
         })
     }
 
+    useEffect(() => {
+        if (title.trim() !== '') {
+            setValidateData({
+                ...validateData,
+                title: true
+            })
+        }
+        if (description.trim() !== '') {
+            setValidateData({
+                ...validateData,
+                description: true
+            })
+        }
+        // eslint-disable-next-line
+    }, [title, description])
+
     const handleSubmit = e => {
         e.preventDefault();
+
+        if (title.trim() === '' && description.trim() === '') {
+            setValidateData({
+                title: false,
+                description: false
+            })
+        } else if (title.trim() === '') {
+            setValidateData({
+                ...validateData,
+                title: false
+            })
+        } else if (description.trim() === ''){
+            setValidateData({
+                ...validateData,
+                description: false
+            })
+        }
     }
 
     return (

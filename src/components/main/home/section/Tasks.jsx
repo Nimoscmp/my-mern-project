@@ -4,7 +4,7 @@ const Tasks = () => {
     <div>
         <h6>Tasks</h6>
         <p className="d-inline-block me-2">There are no tasks. Click on the icon to add one.</p>
-        <i class="fas fa-plus-circle fa-2x"></i>
+        <i className="fas fa-plus-circle fa-2x"></i>
 
         <div>
             <div className="input-group mb-3">
@@ -40,7 +40,7 @@ const Tasks = () => {
                     <td className="text-success">
                         <div className="form-check form-switch">
                             <input className="form-check-input" type="checkbox" id="flexSwitch1"/>
-                            <label className="form-check-label" for="flexSwitch1">No</label>
+                            <label className="form-check-label" htmlFor="flexSwitch1">No</label>
                         </div>
                     </td>
                     <td>2 days</td>
@@ -55,7 +55,7 @@ const Tasks = () => {
                     <td className="text-danger">
                         <div className="form-check form-switch">
                             <input className="form-check-input" type="checkbox" id="flexSwitch2"/>
-                            <label className="form-check-label" for="flexSwitch2">No</label>
+                            <label className="form-check-label" htmlFor="flexSwitch2">No</label>
                         </div>
                     </td>
                     <td>8 days</td>
@@ -70,7 +70,7 @@ const Tasks = () => {
                     <td className="text-success">
                         <div className="form-check form-switch">
                             <input className="form-check-input" type="checkbox" id="flexSwitch3"/>
-                            <label className="form-check-label" for="flexSwitch3">No</label>
+                            <label className="form-check-label" htmlFor="flexSwitch3">No</label>
                         </div>
                     </td>
                     <td>10 days</td>
