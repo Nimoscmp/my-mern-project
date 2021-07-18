@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux"
 import NewProject from "./section/NewProject"
 import ProjectList from "./section/ProjectList"
+import SeeProject from "./section/SeeProject"
 
 const Section = () => {
 
@@ -16,6 +17,7 @@ const Section = () => {
         :   
             <ProjectList/>
         }
+        <SeeProject/>
     </section>        
     </>
     )

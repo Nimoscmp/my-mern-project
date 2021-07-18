@@ -16,10 +16,8 @@ const NewProject = () => {
         description: true
     })
 
-    const [newTask, setNewTask] = useState('')
-
     //  Destructure object
-    const { title , description , tasks} = projectData;
+    const { title , description } = projectData;
 
     //  Save input values 
     const handleChangeValue = e => {
@@ -91,7 +89,7 @@ const NewProject = () => {
         <form action="" onSubmit={handleSubmit}>
             <div className="row">
                 <div className="col-12 mb-3">
-                    <label htmlFor="title" className="form-label">Title</label>
+                    <label htmlFor="title" className="form-label"><strong>Title</strong></label>
                     <input 
                         type="text" 
                         name="title" 
@@ -107,7 +105,7 @@ const NewProject = () => {
                     }    
                 </div>
                 <div className="col-12 mb-3">
-                    <label htmlFor="description" className="form-label">Description</label>
+                    <label htmlFor="description" className="form-label"><strong>Description</strong></label>
                     <input 
                         type="text" 
                         name="description" 
@@ -167,4 +165,4 @@ const NewProject = () => {
     )
 }
 
-export default NewProject
+export default NewProject;

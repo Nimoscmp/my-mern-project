@@ -15,7 +15,7 @@ const ProjectList = () => {
             <tbody>
                 <tr>
                     <th scope="row">1</th>
-                    <td>PHP project</td>
+                    <td data-bs-toggle="modal" data-bs-target="#exampleModal"><strong>PHP project</strong></td>
                     <td className="text-success">Yes</td>
                     <td>25-11-2021</td>
                     <td>
